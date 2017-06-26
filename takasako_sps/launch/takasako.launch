@@ -1,0 +1,4 @@
+<launch>
+  <rosparam param="ip_address">"192.168.0.11"</rosparam>
+  <node name="takasako_1" pkg="takasako_sps" type="scpi_tcp_client_node"/>
+</launch>
