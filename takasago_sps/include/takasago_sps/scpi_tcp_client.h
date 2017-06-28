@@ -6,14 +6,14 @@
 #include <string.h>
 #include <iostream>
 #include <sstream>
-#include <takasako_sps/PowerInfo.h>
+#include <takasago_sps/PowerInfo.h>
 #include <std_msgs/Empty.h>
 
-class TakasokoSps
+class TakasagoSps
 {
 public:
-  TakasokoSps(ros::NodeHandle nh, ros::NodeHandle nhp);
-  ~TakasokoSps(){   close(sd_);}
+  TakasagoSps(ros::NodeHandle nh, ros::NodeHandle nhp);
+  ~TakasagoSps(){   close(sd_);}
 
 private:
   ros::NodeHandle nh_;
@@ -35,6 +35,6 @@ private:
 
   void powerOnCallback(const std_msgs::EmptyConstPtr &msg);
   void powerOffCallback(const std_msgs::EmptyConstPtr &msg);
-  void powerInfoFunction(const ros::TimerEvent & e); 
+  void powerInfoFunction(const ros::TimerEvent & e);
 
 };

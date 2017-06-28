@@ -1,4 +1,4 @@
-#include <takasako_sps/scpi_tcp_client.h>
+#include <takasago_sps/scpi_tcp_client.h>
 
 int main(int argc, char** argv)
 {
@@ -6,9 +6,9 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
   ros::NodeHandle nh_private("~");
 
-  TakasokoSps* TakasokoSpsNode = new TakasokoSps(nh, nh_private);
+  TakasagoSps* TakasagoSpsNode = new TakasagoSps(nh, nh_private);
 
   ros::spin();
-  delete TakasokoSpsNode;
+  delete TakasagoSpsNode;
   return 0;
 }

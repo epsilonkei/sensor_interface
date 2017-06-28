@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(takasako_sps)
+project(takasago_sps)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -113,22 +113,22 @@ include ${Boost_INCLUDE_DIR}  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
-# add_library(takasako_sps
-#   src/${PROJECT_NAME}/takasako_sps.cpp
+# add_library(takasago_sps
+#   src/${PROJECT_NAME}/takasago_sps.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(takasako_sps ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(takasago_sps ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_library(scpi_tcp_client src/scpi_tcp_client.cpp)
-add_dependencies(scpi_tcp_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} takasako_sps_gencpp)
+add_dependencies(scpi_tcp_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} takasago_sps_gencpp)
 target_link_libraries(scpi_tcp_client ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 
 add_executable(scpi_tcp_client_node src/scpi_tcp_client_node.cpp)
-add_dependencies(scpi_tcp_client_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} takasako_sps_gencpp)
+add_dependencies(scpi_tcp_client_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} takasago_sps_gencpp)
 target_link_libraries(scpi_tcp_client_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} scpi_tcp_client)
 
 #############
@@ -171,7 +171,7 @@ target_link_libraries(scpi_tcp_client_node ${catkin_LIBRARIES} ${Boost_LIBRARIES
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_takasako_sps.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_takasago_sps.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
