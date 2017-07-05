@@ -4,12 +4,21 @@
 
 TakasagoSps::TakasagoSps(ros::NodeHandle nh, ros::NodeHandle nhp): nh_(nh), nhp_(nhp)
 {
-  nhp_.param("tm_loop_rate", tm_loop_rate_, 10.0);
+  std::string ip;
+  double freq, voltage;
+  ros::param::get("ip_address", ip);
+  ros::param::get("freq", freq);
+  ros::param::get("voltage", voltage);
+
+  // ROS_ERROR("ip: %s", ip.c_str());
+  // ROS_ERROR("freq: %f", freq);
+
+  nhp_.param("tm_loop_rate", tm_loop_rate_, freq);
   nhp_.param("port", port_, 50001);
-  nhp_.param("ip_address", ip_address_, std::string("192.168.0.1"));
+  nhp_.param("ip_address", ip_address_, ip);
+  nhp_.param("ip_address", voltage_, voltage);
 
   //socket
-
   if((sd_ = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     ROS_ERROR("can not open socket");
     ros::shutdown();
@@ -59,7 +68,7 @@ TakasagoSps::TakasagoSps(ros::NodeHandle nh, ros::NodeHandle nhp): nh_(nh), nhp_
       return;
     }
   memset(read_buf_, 0, sizeof(read_buf_));
-  //sleep(1); // tmp
+  sleep(1); // IDN message too long
   while (read(sd_, read_buf_, sizeof(read_buf_)) <= 0);
   ROS_INFO("initialized: %s", read_buf_);
 
@@ -141,40 +150,40 @@ void TakasagoSps::powerInfoFunction(const ros::TimerEvent & e)
   takasago_sps::PowerInfo power_info;
   std::stringstream ss;
 
+  power_info.header.stamp = ros::Time::now();
+
   if  (write(sd_, "MEAS:CURR?\n",11)==-1 )
     {
       ROS_ERROR("can not send socket");
       return;
     }
   memset(read_buf_, 0, sizeof(read_buf_));
-  //usleep(50000);
   while (read(sd_, read_buf_, sizeof(read_buf_)) <= 0);
-
   ss.str(std::string(read_buf_));
   ss >>power_info.current;
 
-  if  (write(sd_, "MEAS:VOLT?\n",11)==-1 )
-    {
-      ROS_ERROR("can not send socket");
-      return;
-    }
-  memset(read_buf_, 0, sizeof(read_buf_));
-  //usleep(50000);
-  while (read(sd_, read_buf_, sizeof(read_buf_)) <= 0);
+  power_info.voltage = voltage_;
+  power_info.power = power_info.current * voltage_;
 
-  ss.str(std::string(read_buf_));
-  ss >>power_info.voltage;
+  // if  (write(sd_, "MEAS:VOLT?\n",11)==-1 )
+  //   {
+  //     ROS_ERROR("can not send socket");
+  //     return;
+  //   }
+  // memset(read_buf_, 0, sizeof(read_buf_));
+  // while (read(sd_, read_buf_, sizeof(read_buf_)) <= 0);
+  // ss.str(std::string(read_buf_));
+  // ss >>power_info.voltage;
 
-  if  (write(sd_, "MEAS:POW?\n",11)==-1 )
-    {
-      ROS_ERROR("can not send socket");
-      return;
-    }
-  memset(read_buf_, 0, sizeof(read_buf_));
-  while (read(sd_, read_buf_, sizeof(read_buf_)) <= 0);
-
-  ss.str(std::string(read_buf_));
-  ss >>power_info.power;
+  // if  (write(sd_, "MEAS:POW?\n",11)==-1 )
+  //   {
+  //     ROS_ERROR("can not send socket");
+  //     return;
+  //   }
+  // memset(read_buf_, 0, sizeof(read_buf_));
+  // while (read(sd_, read_buf_, sizeof(read_buf_)) <= 0);
+  // ss.str(std::string(read_buf_));
+  // ss >>power_info.power;
 
   //ROS_INFO("%f", power_info.current);
   power_info_pub_.publish(power_info);

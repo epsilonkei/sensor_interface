@@ -1,4 +1,13 @@
 <launch>
-  <rosparam param="ip_address">"192.168.0.1"</rosparam>
-  <node name="takasago_12V" pkg="takasago_sps" type="scpi_tcp_client_node"/>
+  <arg name="ip_address" default="192.168.0.1" />
+  <!-- <arg name="name_suffix" default="" /> -->
+  <arg name="freq" default="20.0"/>
+  <arg name="voltage" default="12.0" />
+  <!-- <arg name="ns" default="defo" /> -->
+  <param name="ip_address" value="$(arg ip_address)" />
+  <param name="freq" type="double" value="$(arg freq)" />
+  <param name="voltage" type="double" value="$(arg voltage)" />
+  <node name="takasago" pkg="takasago_sps" type="scpi_tcp_client_node" />
+  <!--   <remap from="power_info" to="power_info$(arg name_suffix)"/> -->
+  <!-- </node> -->
 </launch>

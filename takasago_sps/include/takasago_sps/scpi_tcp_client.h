@@ -24,6 +24,7 @@ private:
   bool power_flag_;
   ros::Timer timer_;
   double tm_loop_rate_;
+  double voltage_;
 
   //socket
   int sd_;
