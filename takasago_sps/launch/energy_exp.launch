@@ -1,0 +1,19 @@
+<launch>
+  <include file="$(find log_tools)/launch/log_server.launch"/>
+  <arg name="voltage1" default="13.5" />
+  <arg name="voltage2" default="72.0" />
+  <group ns="12V">
+    <include file="$(find takasago_sps)/launch/takasago.launch">
+      <arg name="ip_address" value="192.168.0.1" />
+      <arg name="voltage" value="$(arg voltage1)" />
+      <!-- <arg name="name_suffix" value="_12V" /> -->
+    </include>
+  </group>
+  <group ns="80V">
+    <include file="$(find takasago_sps)/launch/takasago.launch">
+      <arg name="ip_address" value="192.168.0.2" />
+      <arg name="voltage" value="$(arg voltage2)" />
+      <!-- <arg name="name_suffix" value="_80V" /> -->
+    </include>
+  </group>
+</launch>

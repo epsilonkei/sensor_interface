@@ -1,0 +1,23 @@
+global:
+  layout: manual
+plots:
+  - title: "12Vpower_current"
+    topic: [/12V/power_info]
+    field: ["current"]
+    layout: [0, 0]
+    # topic: [/12V/power_info, /12V/power_info, /12V/power_info]
+    # field: ["current", "voltage", "power"]
+  - title: "80Vpower_current"
+    topic: [/80V/power_info]
+    field: ["current"]
+    layout: [0, 1]
+    # topic: [/80V/power_info, /80V/power_info, /80V/power_info]
+    # field: ["current", "voltage", "power"]
+  - title: "12Vpower_power"
+    topic: [/12V/power_info]
+    field: ["power"]
+    layout: [1, 0]
+  - title: "80Vpower_power"
+    topic: [/80V/power_info]
+    field: ["power"]
+    layout: [1, 1]
